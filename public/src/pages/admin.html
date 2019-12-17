@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#999999" />
+    <meta name="description" content="Pakistan Online Shopping Website">    
+    <title>Brand Hub</title>
+    
+    <!-- dropdown -->
+    <!-- dropdown -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" >
+    <link rel="stylesheet" href="../css/style.css" >
+
+</head>
+<body>
+    <!-- <form> -->
+        <!-- Image and text -->
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+            <img src="" width="50" height="50" class="d-inline-block align-top" alt="">
+            BrandHub
+            </a>
+        </nav>
+        <br>
+        <div class="form-group" style="align-content: center;">
+            <div class="row">
+
+                <div class="offset-md-1"></div>
+
+
+                <div class="card text-white bg-dark  col-md-3">
+                    <div class="card-header">Total-Seller</div>
+                    <div class="card-body" style="text-align: center;" >
+                        <h1 id="users_count"></h1>
+                    </div>
+                </div>
+
+                <div class="offset-md-1"></div>
+    
+                <div class="card text-white bg-dark col-md-3">
+                    <div class="card-header">Total-Product</div>
+                    <div class="card-body" style="text-align: center;">
+                        <h1 id="product_count"></h1>
+                    </div>
+                </div>
+
+                <div class="offset-md-1"></div>
+
+                <div class="offset-md-1">
+                    <button class="btn btn-secondary" style="height: 40%; width: 100%;" onclick="adminlogput();" >LOGOUT</button>
+                </div>
+            </div> 
+            <hr class="new1"> 
+        </div>
+
+        <!-- dropdown -->
+        <div id="user_product">
+
+        </div>
+
+    
+    <!-- </form> -->
+
+        <!-- firebase links -->
+        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-messaging.js"></script>
+    
+        <!-- bootstrap links -->
+       
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src = "../js/firebaseConfig.js"></script>
+        <script src = "../js/admin.js"></script>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Brand Hub</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../../mainfest.json">
+    <script>
+            var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if(!currentUser) {
+                alert("Login first");
+                window.location.assign("/src/pages/login.html");
+            }
+            else if(currentUser.type === "admin" ) {
+                window.location.assign("/src/pages/admin.html");
+            }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-color">
+            <a class="navbar-brand ml-3" href="../../index.html">
+                <img src="../images/logo.png" height="48" class="d-inline-block align-top" />
+            </a>
+        </nav>
+    </header>
+    <section>
+       <a style="padding-left: 1%; padding-top: 2%;" href="/"><b><</b>Back to home</a>
+       <div class="container mt-5">
+            <div class="container justify-content-center">
+                <h1 class="text-center" style="background: green; color: white;">Submit an Ad</h1>            
+                <form action="javascript:void(0)" id="myform">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <label>Product Name</label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="productname" required>
+                            </td>                            
+                        </tr>
+                       
+                        <tr>
+                            <td> <label >Brand*</label></td>
+                            <td>
+                                <select class="form-control" id="product_categoty" required>
+                                    <option value="Women’s">Women’s</option>
+                                    <option value="Men’s">Men’s</option>
+                                    <option value="Kid’s">Kid’s</option>
+                                    <option value="Toddler">Toddler</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Conditions*</label></td>
+                            <td>
+                                <select class="form-control" id="product_condition" required>
+                                    <option value="New">New</option>
+                                    <option value="Used">Used</option>
+                                </select>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td><label>Price*</label></td>
+                            <td>
+                                <input type="number" class="form-control" id="price" required>
+                            </td>
+                        </tr>
+                        <tr>
+                                <td> <label >Product Description*</label></td>
+                                <td>
+                                    <textarea cols="30" rows="10" class="form-control" placeholder="Include the brand, model, age and any included accessories." id="product_description" required></textarea>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td> <label for="">Upload Photos</label></td>
+                            <td><input type="file" multiple class="form-control" id="product_photo" required> </td>
+                        </tr>
+                        <!-- paste -->
+                        
+                        <!-- <div class="card-body">
+                                <h5 class="card-title">${doc.data.price}</h5>
+                                <p class="card-text">${doc.data.productname}</p>
+                        </div> -->
+
+
+                        <!-- <tr>
+                            <td> <label>Your Name*</label> </td>
+                            <td><input type="text" class="form-control" id="owner_name" required> </td>
+                        </tr> -->
+                        <!-- <tr>
+                            <td><label>Phone number*</label></td>
+                            <td><input type="text" class="form-control" id="phone_no" required> </td>
+                        </tr> -->
+                        <!-- <tr>
+                            <td><label>Province*</label></td>
+                            <td>
+                                <select class="form-control" id="provience_list" required>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Sindh">Sindh</option>
+                                    <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
+                                    <option value="Balochistan">Balochistan</option>
+                                    <option value="Gilgit Baltistan">Gilgit Baltistan</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>City*</label></td>
+                            <td>
+                                <select class="form-control" id="city_list" required>
+                                    <option value="Abbottabad">Abbottabad</option>
+                                    <option value="Faisalabad">Faisalabad</option>
+                                    <option value="Gujranwala">Gujranwala</option>
+                                    <option value="Gujrat">Gujrat</option>
+                                    <option value="Hyderabad">Hyderabad</option>
+                                    <option value="Islamabad">Islamabad</option>
+                                    <option value="Karachi">Karachi</option>
+                                    <option value="Lahore">Lahore</option>
+                                    <option value="Multan">Multan</option>
+                                    <option value="Peshawar">Peshawar</option>
+                                    <option value="Quetta">Quetta</option>
+                                    <option value="Rawalpindi">Rawalpindi</option>
+                                    <option value="Sargodha">Sargodha</option>
+                                    <option value="Sialkot">Sialkot</option>
+                                </select>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td><label>Area/Neighbourhood*</label></td>
+                            <td><input type="text" class="form-control" id="Neighbourhood" placeholder="Complete Address" required> </td>
+                        </tr> -->
+                    </table>
+                    <hr>
+                    <button class="form-control btn btn-success" onclick="SubmitAds()">Submit</button>
+                </form>
+            </div>
+            <label id="erroelab"></label>
+        </div>
+
+    </section>
+
+
+    <!-- firebase links -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-messaging.js"></script>
+
+    <!-- bootstrap links -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src = "../js/firebaseConfig.js"></script>
+    <script src = "../js/app.js"></script>
+</body>
+</html>
