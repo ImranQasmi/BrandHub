@@ -1,5 +1,8 @@
 
 let users_count = document.getElementById("users_count");
+let arr = [];
+let start = 0;
+let pageLimit = 8;
 
 firebase.firestore().enablePersistence()
     .then(function () {
@@ -248,25 +251,22 @@ function Openedit() {
 
 function RecommedSearch() {
     let div = document.getElementById('recomended_search');
-
-    // var favlist = JSON.parse(localStorage.getItem('favlist'));
+    var pagination = document.getElementById('pagination');
 
     db.collection("advertise").where("status", "==", true).limit(12)
         .get()
         .then((querySnapshot) => {
-            console.log("querySnapshot", querySnapshot)
-            var arr = [];
+
+             arr = [];
             querySnapshot.forEach(function (doc) {
                 arr.push({ id: doc.id, data: doc.data() });
             })
 
-            console.log("arr", arr)
-
             localStorage.setItem("current_search_data", JSON.stringify(arr));
 
-            div.innerHTML = `
+        div.innerHTML = `
         <div class="parent card-deck">
-        ${ arr.map((doc) => {
+        ${ arr.slice(start, pageLimit).map((doc) => {
                 return (`
                 <div class="child card mt-5" onclick="ShowAds('${doc.id}')">
                     <div>
@@ -281,10 +281,64 @@ function RecommedSearch() {
             }).join('')}
         <div>
         `
+        pagination.innerHTML = `
+        ${ arr.slice(start, Math.ceil(arr.length / pageLimit)).map((doc, index) =>{
+            return (
+            `<li class="page-item" onClick={paginationForRecommded('${index}')}><p class="page-link">${index + 1}</p></li>`
+            )
+        }).join('')}`
+        
         })
         .catch(function (error) {
             console.log("Error getting documents: ", error);
         });
+}
+
+
+///pagination 
+
+function paginationForRecommded(index) {
+    let div = document.getElementById('recomended_search');
+
+    div.innerHTML = `
+    <div class="parent card-deck">
+    ${ arr.slice(index, index + pageLimit).map((doc) => {
+            return (`
+            <div class="child card mt-5" onclick="ShowAds('${doc.id}')">
+                <div>
+                    <img class="card-img-top" height = "180px" src="${doc.data.url}" />
+                </div>
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">${doc.data.price}</h5>
+                    <p class="card-text">${doc.data.productname}</p>
+                </div>
+            </div>`)
+        }).join('')}
+    <div>`;
+   
+}
+
+function paginationForSearch(index) {
+    let div = document.getElementById('ads_card');
+
+    div.innerHTML = `
+    <div class="parent card-deck">
+    ${ arr.slice(index, index + pageLimit).map((doc) => {
+            return (`
+            <div class="child card mt-5" onclick="ShowAds('${doc.id}')">
+                <div>
+                    <img class="card-img-top" height = "180px" src="${doc.data.url}" />
+                </div>
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">${doc.data.price}</h5>
+                    <p class="card-text">${doc.data.productname}</p>
+                </div>
+            </div>`)
+        }).join('')}
+    <div>`;
+   
 }
 
 ///////////////////////////////////////getAllProducts/////
@@ -504,6 +558,8 @@ async function editProduct(id) {
 
 function Search() {
     var search_text = document.getElementById("search_text").value;
+    var pagination = document.getElementById('pagination');
+
     if (search_text != "" && search_text != " ") {
         search_text = search_text.toLowerCase();
         // console.log("item", search_text);
@@ -528,7 +584,7 @@ function Search() {
 
                 ads_card.innerHTML = `
                 <div class="parent card-deck">
-                ${ arr.map((doc) => {
+                ${ arr.slice(start, pageLimit).map((doc) => {
                     return (`
                         <div class="child card mt-5" onclick="ShowAds('${doc.id}')">
                             <div>
@@ -543,6 +599,13 @@ function Search() {
                 }).join('')}
                 <div>
                 `
+                pagination.innerHTML = `
+                ${ arr.slice(start, Math.ceil(arr.length / pageLimit)).map((doc, index) =>{
+                    return (
+                    `<li class="page-item" onClick={paginationForSearch('${index}')}><p class="page-link">${index + 1}</p></li>`
+                    )
+                }).join('')}`
+
             })
             .catch(function (error) {
                 console.log("Error getting documents: ", error);
@@ -555,22 +618,22 @@ function Search() {
 
 function SearchAdsByCategory(category) {
     var ads_card = document.getElementById('ads_card');
+    var pagination = document.getElementById('pagination');
 
     db.collection("advertise").where("category", "==", category).where("status", "==", true).get()
         .then((querySnapshot) => {
             console.log("querySnapshot", querySnapshot)
-            var arr = [];
+             arr = [];
             querySnapshot.forEach(function (doc) {
                 arr.push({ id: doc.id, data: doc.data() });
             })
-
-            console.log("arr", arr)
 
             localStorage.setItem("current_search_data", JSON.stringify(arr));
 
             ads_card.innerHTML = `
             <div class="parent card-deck">
-            ${ arr.map((doc) => {
+            ${
+                arr.slice(start, pageLimit).map((doc) => {
                 return (`
                     <div class="child card mt-5" onclick="ShowAds('${doc.id}')">
                         <div>
@@ -585,6 +648,12 @@ function SearchAdsByCategory(category) {
             }).join('')}
             <div>
             `
+            pagination.innerHTML = `
+            ${ arr.slice(start, Math.ceil(arr.length / pageLimit)).map((doc, index) =>{
+                return (
+                `<li class="page-item" onClick={paginationForSearch('${index}')}><p class="page-link">${index + 1}</p></li>`
+                )
+            }).join('')}`
         })
         .catch(function (error) {
             console.log("Error getting documents: ", error);
@@ -594,10 +663,18 @@ function SearchAdsByCategory(category) {
 
 function SearchAdsByPrice(params) {
     var ads_card = document.getElementById('ads_card');
+    var pagination = document.getElementById('pagination');
+
+    
 
     console.log(params);
 
-    db.collection("advertise").where("price", ">=", params.min || "price", ">=", params.max).where("status", "==", true).get()
+    db
+    .collection("advertise")
+    .where("price", ">=", params.min.toString())
+    .where("price", "<=", params.max.toString())
+    .where("status", "==", true)
+    .get()
         .then((querySnapshot) => {
             console.log("querySnapshot", querySnapshot)
             var arr = [];
@@ -611,7 +688,7 @@ function SearchAdsByPrice(params) {
 
             ads_card.innerHTML = `
             <div class="parent card-deck">
-            ${ arr.map((doc) => {
+            ${ arr.slice(start, pageLimit).map((doc) => {
                 return (`
                     <div class="child card mt-5" onclick="ShowAds('${doc.id}')">
                         <div>
@@ -626,6 +703,12 @@ function SearchAdsByPrice(params) {
             }).join('')}
             <div>
             `
+            pagination.innerHTML = `
+            ${ arr.slice(start, Math.ceil(arr.length / pageLimit)).map((doc, index) =>{
+                return (
+                `<li class="page-item" onClick={paginationForSearch('${index}')}><p class="page-link">${index + 1}</p></li>`
+                )
+            }).join('')}`
         })
         .catch(function (error) {
             console.log("Error getting documents: ", error);

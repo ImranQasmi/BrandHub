@@ -61,11 +61,10 @@
                     </a>
                     
                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink" >
-                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 500, max: 600})">100 - 200</a>
-                        <!-- <a class="dropdown-item" href="#" onclick="SearchAdsByPrice('b')">200 - 300</a>
-                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice('c')">300 - 400</a>
-                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice('d')">400 - 500</a>
-                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice('e')">500 - 600</a> -->
+                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 0, max: 100})">0 - 100</a>
+                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 100, max: 200})">100 - 200</a>
+                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 200, max: 300})">200 - 300</a>
+                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 500, max: 600})">500 - 600</a>
                     </div>
                 </div>
             </div>
@@ -83,6 +82,13 @@
             </div>
             <!-- </div> -->
         </section>
+    </div>
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pagination">
+              
+            </ul>
+          </nav>
     </div>
 
     <!-- ////////////////////////////footer top////////////////////////// -->
