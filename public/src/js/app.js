@@ -88,7 +88,7 @@ function Login() {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            alert(errorCode);
+            // alert(errorCode);
             alert(errorMessage);
         });
 
@@ -99,6 +99,7 @@ function Login() {
 ///////////////////////////////////////////////////////////////////////////////////
 
 function SignUp() {
+
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
     let name = document.getElementById('name').value;
@@ -424,19 +425,14 @@ function loadEditPage(index) {
     </tr>
    
     <tr>
-        <td> <label >Brand*</label></td>
+        <td> <label >Category*</label></td>
         <td>
             <select class="form-control" id="product_categoty" required>
-                <option value="Nike" ${product.category === "Nike" ? "selected" : ""} >Nike</option>
-                <option value="Adidas"   ${product.category === "Adidas" ? "selected" : ""}  >Adidas</option>    
-                <option value="Levis"   ${product.category === "Levis" ? "selected" : ""}>Levis</option>
-                <option value="Calvin Klein" ${product.category === "Calvin Klein" ? "selected" : ""}>Calvin Klein</option>
-                <option value="Puma" ${product.category === "Puma" ? "selected" : ""} >Puma</option>
-                <option value="ZARA" ${product.category === "ZARA" ? "selected" : ""} >ZARA</option>
-                <option value="Versace" ${product.category === "Versace" ? "selected" : ""} >Versace</option>
-                <option value="American Eagle" ${product.category === "American Eagle" ? "selected" : ""} >American Eagle</option>
-                <option value="Lacoste" ${product.category === "Lacoste" ? "selected" : ""} >Lacoste</option>
-                <option value="Hollister" ${product.category === "Hollister" ? "selected" : ""} >Hollister</option>              
+                <option value="Women’s" ${product.category === "Women’s" ? "selected" : ""} >Women’s</option>
+                <option value="Men’s"   ${product.category === "Men’s" ? "selected" : ""}  >Men’s</option>    
+                <option value="Kid’s"   ${product.category === "Kid’s" ? "selected" : ""}>Kid’s</option>
+                <option value="Toddler" ${product.category === "Toddler" ? "selected" : ""}>Toddler</option>
+                <option value="Others" ${product.category === "Others" ? "selected" : ""} >Others</option>              
             </select>
         </td>
     </tr>
@@ -671,8 +667,8 @@ function SearchAdsByPrice(params) {
 
     db
     .collection("advertise")
-    .where("price", ">=", params.min.toString())
-    .where("price", "<=", params.max.toString())
+    .where("price", ">=", params.min)
+    .where("price", "<", params.max)
     .where("status", "==", true)
     .get()
         .then((querySnapshot) => {
