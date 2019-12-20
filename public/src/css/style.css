@@ -426,3 +426,18 @@ hr.new1 {
   border: 5px solid black;
   border-radius: 5px;
 }
+
+
+.bg-dark {
+  background-color: #1185f8!important;
+}
+
+.btn-dark {
+    color: rgba(2, 2, 2, 0.9);
+    background-color: #fefefe;
+    border-color: #343a40;
+}
+.row{
+  margin-right: 0px;
+  margin-left: 0px;
+}

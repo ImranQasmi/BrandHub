@@ -20,7 +20,7 @@
 </head>
 <body onload="RecommedSearch()">
     <header class="border-bottom">
-        <nav class="navbar navbar-light bg-light justify-content-between"   style="width: 1267px;" >
+        <nav class="navbar navbar-light bg-light justify-content-between">
             <span>
                 <a class="navbar-brand" href="./index.html"><img src="./src/images/logo.png" height="48" alt=""/></a>
                 <b>BrandHub</b>
@@ -41,7 +41,7 @@
             <div class="col-md-3 pl-4 my-3">
                 <div class="dropdown show">
                     <a class="dropdown-toggle font-weight-bold dropdown-custom" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Brosered by catagory
+                        Search by catagory
                     </a>
                     
                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink" >
@@ -50,6 +50,7 @@
                         <a class="dropdown-item" href="#" onclick="SearchAdsByCategory('Kid’s')">Kid’s</a>
                         <a class="dropdown-item" href="#" onclick="SearchAdsByCategory('Toddler')">Toddler</a>
                         <a class="dropdown-item" href="#" onclick="SearchAdsByCategory('Others')">Others</a>
+                        <a class="dropdown-item" href="./index.html" >All products</a>
                     </div>
                 </div>
             </div>
@@ -57,14 +58,17 @@
             <div class="col-md-3 pl-4 my-3">
                 <div class="dropdown show">
                     <a class="dropdown-toggle font-weight-bold dropdown-custom" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Brosered by price
+                        Search by price
                     </a>
                     
                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink" >
                         <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 0,   max: 100})">0   - 100</a>
                         <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 100, max: 200})">100 - 200</a>
                         <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 200, max: 300})">200 - 300</a>
+                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 300, max: 400})">300 - 400</a>
                         <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 500, max: 600})">500 - 600</a>
+                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 700, max: 800})">700 - 800</a>
+                        <a class="dropdown-item" href="#" onclick="SearchAdsByPrice({min: 900, max: 1000})">900 - 1000</a>
                     </div>
                 </div>
             </div>
@@ -82,13 +86,21 @@
             </div>
             <!-- </div> -->
         </section>
-    </div>
-    <div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination" id="pagination">
-              
-            </ul>
-          </nav>
+    </div><br><br><br>
+
+    <div class="row">
+
+        <div class="offset-md-2">
+
+        </div>
+
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                
+                </ul>
+            </nav>
+        </div>
     </div>
 
     <!-- ////////////////////////////footer top////////////////////////// -->

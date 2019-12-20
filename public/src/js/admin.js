@@ -32,12 +32,15 @@ Promise.all(promise)
     
     document.getElementById("user_product").innerHTML = users.map((value) =>{
         return(`
-                <div class="dropdown" style="text-align: center;">
-                <button type="button" class="btn btn-dark dropdown-toggle w-75" data-toggle="dropdown">
-                ${value.ownerName}
+                <div class="dropdown row" style="text-align: center;">
+                 
+                <div class = "col-md-2" style="text-align: right;"><b>${value.ownerName}</b></div>
+                 
+                <button type="button" class="btn btn-dark dropdown-toggle w-50" data-toggle="dropdown">
+                ${"View Product"}
                 </button>
-                <button type="button" class="btn btn-dark" onClick="deleteUsers('${value.uid}')">Delete</button>
-                <div class="dropdown-menu w-75">
+                <a href="#myModal_1" class="trigger-btn" data-toggle="modal" onClick="store_user_uid('${value.uid}')"> <img src="../images/deleteIcon.png" height="48" alt=""/> </a>
+                <div class="dropdown-menu w-50">
                 ${
                     value.products.map((product) =>{
                         return(`
@@ -48,7 +51,7 @@ Promise.all(promise)
                                 </div>
                 
                                 <div class="col-md-3 form-group">
-                                    <button class="btn btn-secondary"  onClick="deleteProduct('${product.docId}')">Delete</button>
+                                    <a href="#myModal_2" class="trigger-btn" data-toggle="modal" onClick="store_product_uid('${product.docId}')">Delete</a>
                                 </div>
                         
                             </div>
@@ -71,31 +74,43 @@ Promise.all(promise)
     console.log(error.message)
 })
 
+function store_user_uid(duserid)
+{
+    localStorage.setItem("delete_user_id", duserid );
+}
 
-function deleteProduct(docId) {
+function store_product_uid(dprodid)
+{
+    localStorage.setItem("delete_product_id", dprodid );
+}
+
+function deleteProduct() {
+    var tobe_del_pid = localStorage.getItem("delete_product_id");
      db.collection("advertise")
-     .doc(docId).delete()
+     .doc(tobe_del_pid).delete()
     .then(() => {
-        alert('Product deleted')
+        // alert('Product deleted')
         window.location.assign('/src/pages/admin.html');
     })
     .catch((error) => {
-        alert(error.message)
+        console.log(error.message)
     })
 }
 
-function deleteUsers(userId) {
+function deleteUsers() {
+    var tobe_del_uid = localStorage.getItem("delete_user_id");
+    console.log(tobe_del_uid);
     let updatePromise = [];
     db
     .collection("users")
-    .doc(userId)
+    .doc(tobe_del_uid)
     .update({
         status: false
     })
     .then(() =>{
         db
         .collection("advertise")
-        .where("uid", "==", userId)
+        .where("uid", "==", tobe_del_uid)
         .get()
         .then((response) => {
             console.log("response", response)
@@ -115,7 +130,7 @@ function deleteUsers(userId) {
         })
     })
     .catch((error) => {
-        alert(error.message)
+        console.log(error.message)
     })
     
 }

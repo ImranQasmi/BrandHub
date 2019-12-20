@@ -169,7 +169,7 @@ async function SubmitAds() {
 
     var category = document.getElementById("product_categoty").value;
     var condition = document.getElementById('product_condition').value;
-    var price = document.getElementById("price").value;
+    var price = parseInt(document.getElementById("price").value, 10);
     var description = document.getElementById("product_description").value;
     var productname = document.getElementById("productname").value;
 
@@ -375,7 +375,7 @@ function getAllProducts() {
                       </div>
                   
                       <div class="col-md-6 form-group">
-                          <button href="#" class="btn btn-secondary form-control" onClick="deleteProduct('${doc.id}')">Delete</button>
+                          <button href="#myModal_3" class="trigger-btn btn btn-secondary form-control" data-toggle="modal" onClick="store_edit_ProductId('${doc.id}')">Delete</button>
                       </div>
                   </div>
 
@@ -389,13 +389,19 @@ function getAllProducts() {
         })
 }
 
-function deleteProduct(id) {
-    db.collection("advertise").doc(id).delete()
+function store_edit_ProductId(eprodid)
+{
+    localStorage.setItem("edit_product_id", eprodid);
+}
+
+function deleteProduct() {
+    var edit_wala_prodId = localStorage.getItem("edit_product_id");
+    db.collection("advertise").doc(edit_wala_prodId).delete()
         .then(() => {
-            alert('Product deleted')
+            console.log('Product deleted')
         })
         .catch((error) => {
-            alert(error.message)
+            console.log(error.message)
         })
 }
 
@@ -467,7 +473,7 @@ function loadEditPage(index) {
     </tr>
 </table>
 <hr>
-<button class="form-control btn btn-success" onclick="editProduct('${product.id}')">Submit</button>
+<button class="form-control btn btn" style="background-color: #1185f8!important;" onclick="editProduct('${product.id}')"><b>SAVE</b></button>
     `
 
 }
@@ -558,7 +564,6 @@ function Search() {
 
     if (search_text != "" && search_text != " ") {
         search_text = search_text.toLowerCase();
-        // console.log("item", search_text);
         var ads_card = document.getElementById('ads_card');
 
         db.collection("advertise")
@@ -574,8 +579,10 @@ function Search() {
                         arr.push({ id: doc.id, data: doc.data() });
                 })
 
-                console.log("arr", arr)
+                console.log("arr", arr.length);
 
+                if(arr.length)
+                {
                 localStorage.setItem("current_search_data", JSON.stringify(arr));
 
                 ads_card.innerHTML = `
@@ -594,7 +601,11 @@ function Search() {
                         </div>`)
                 }).join('')}
                 <div>
-                `
+                ` }
+                    else{
+                        swal("! NOT FOUND", "Product Not Foumd", "error");
+                    }
+
                 pagination.innerHTML = `
                 ${ arr.slice(start, Math.ceil(arr.length / pageLimit)).map((doc, index) =>{
                     return (
@@ -615,6 +626,7 @@ function Search() {
 function SearchAdsByCategory(category) {
     var ads_card = document.getElementById('ads_card');
     var pagination = document.getElementById('pagination');
+    var b; 
 
     db.collection("advertise").where("category", "==", category).where("status", "==", true).get()
         .then((querySnapshot) => {
@@ -623,6 +635,11 @@ function SearchAdsByCategory(category) {
             querySnapshot.forEach(function (doc) {
                 arr.push({ id: doc.id, data: doc.data() });
             })
+
+            b  = arr.length;
+
+            if(b !== 0)
+            {
 
             localStorage.setItem("current_search_data", JSON.stringify(arr));
 
@@ -650,6 +667,11 @@ function SearchAdsByCategory(category) {
                 `<li class="page-item" onClick={paginationForSearch('${index}')}><p class="page-link">${index + 1}</p></li>`
                 )
             }).join('')}`
+
+        }
+        else{
+            swal("! NOT FOUND", "Product Not found", "error");
+        }
         })
         .catch(function (error) {
             console.log("Error getting documents: ", error);
@@ -660,7 +682,7 @@ function SearchAdsByCategory(category) {
 function SearchAdsByPrice(params) {
     var ads_card = document.getElementById('ads_card');
     var pagination = document.getElementById('pagination');
-
+    var a ;
     
 
     console.log(params);
@@ -679,6 +701,11 @@ function SearchAdsByPrice(params) {
             })
 
             console.log("arr", arr)
+
+            a = arr.length;
+
+            if(a !== 0)
+            {
 
             localStorage.setItem("current_search_data", JSON.stringify(arr));
 
@@ -705,6 +732,11 @@ function SearchAdsByPrice(params) {
                 `<li class="page-item" onClick={paginationForSearch('${index}')}><p class="page-link">${index + 1}</p></li>`
                 )
             }).join('')}`
+          }
+          else
+          {
+            swal("! NOT FOUND", "Product Not found", "error");
+          }
         })
         .catch(function (error) {
             console.log("Error getting documents: ", error);
